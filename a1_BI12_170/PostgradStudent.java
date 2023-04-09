@@ -39,29 +39,30 @@ public class PostgradStudent extends Student{
     @DomainConstraint(type = "Float", mutable = true, optional = false, min = MIN_GPA, max = MAX_GPA)
     private Float gpa;
 
-    public PostgradStudent(@AttrRef("id") Integer id,
-                           @AttrRef("name") String name, 
-                           @AttrRef("phoneNumber") String phoneNumber, 
-                           @AttrRef("address") String address,
-                           @AttrRef("gpa") Float gpa) {
+public PostgradStudent(@AttrRef("id") Integer id, 
+                       @AttrRef("name") String name, 
+                       @AttrRef("phoneNumber") String phoneNumber, 
+                       @AttrRef("address") String address, 
+                       @AttrRef("gpa") Float gpa) throws NotPossibleException {
         super(id, name, phoneNumber, address);
         if (!validateGpa(gpa)) {
             throw new NotPossibleException("PostgradStudent.init: invalid gpa: " + gpa);
         }
-        if (!validateId(id)) {
+        if (!super.validateId(id)) {
             throw new NotPossibleException("PostgradStudent.init: invalid id: " + id);
         }
-        if (!validateName(name)) {
+        if (!super.validateName(name)) {
             throw new NotPossibleException("PostgradStudent.init: invalid name: " + name);
         }
-        if (!validatePhoneNumber(phoneNumber)) {
+        if (!super.validatePhoneNumber(phoneNumber)) {
             throw new NotPossibleException("PostgradStudent.init: invalid phoneNumber: " + phoneNumber);
         }
-        if (!validateAddress(address)) {
+        if (!super.validateAddress(address)) {
             throw new NotPossibleException("PostgradStudent.init: invalid address: " + address);
         }
-        this.gpa = gpa;        
+        this.gpa = gpa;
     }
+    
 
     /**
      * @effects
@@ -76,4 +77,45 @@ public class PostgradStudent extends Student{
         return gpa >= MIN_GPA && gpa <= MAX_GPA;
     }
 
+    /**
+     * @effects
+     *  if id is valid
+     *      return true
+     *  else
+     *      return false
+     */
+    @DOpt(type=OptType.Helper)
+    @AttrRef("id")
+    protected boolean validateId(Integer id) {
+        return id >= MIN_ID && id <= MAX_ID;
+    }
+
+    /**
+     * @effects
+     *   if gpa is valid
+     *     set this.gpa = gpa
+     *  else
+     *    do nothing
+     * @param gpa
+     * @return boolean
+     */
+    @DOpt(type=OptType.Mutator)
+    public boolean setGpa(Float gpa) {
+        if (validateGpa(gpa)) {
+            this.gpa = gpa;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @effects
+     *  return this.gpa
+     * @return {@link Float gpa}
+     */
+    @DOpt(type=OptType.Observer)
+    @AttrRef("gpa")
+    public Float getGpa() {
+        return gpa;
+    }
 }

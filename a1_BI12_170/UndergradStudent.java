@@ -1,5 +1,11 @@
 package a1_BI12_170;
 
+import utils.AttrRef;
+import utils.DOpt;
+import utils.DomainConstraint;
+import utils.NotPossibleException;
+import utils.OptType;
+
 /**
  * @overview An under graduate student being that is characterized by an id, name, phoneNumber and address.
  * @attributes
@@ -21,8 +27,39 @@ package a1_BI12_170;
  * 
  * @author bhhoang
  */
-public class UndergradStudent {
+public class UndergradStudent extends Student{
     //Override constants
-    public static final Integer MIN_ID = (int) 1e5;
-    public static final Integer MAX_ID = (int) 1e8;
+    public static final int MIN_ID = (int) 1e5;
+    public static final int MAX_ID = (int) 1e8;
+
+    public UndergradStudent(@AttrRef("id") Integer id,
+                            @AttrRef("name") String name, 
+                            @AttrRef("phoneNumber") String phoneNumber, 
+                            @AttrRef("address") String address) throws NotPossibleException {
+        super(id, name, phoneNumber, address);
+        if (!validateId(id)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid id: " + id);
+        }
+        if (!validateName(name)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid name: " + name);
+        }
+        if (!validatePhoneNumber(phoneNumber)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid phoneNumber: " + phoneNumber);
+        }
+        if (!validateAddress(address)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid address: " + address);
+        }
+    }
+    
+    /**
+     * @effects
+     *  if id is valid
+     *      return true
+     *  else
+     *      return false
+     */
+    @DOpt(type = OptType.Helper)
+    public boolean validateId(Integer id) {
+        return id >= MIN_ID && id <= MAX_ID;
+    }
 }

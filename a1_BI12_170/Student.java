@@ -30,11 +30,11 @@ public class Student implements Comparable<Student>{
     @DomainConstraint(type = "Integer", mutable = false, optional = false, min = MIN_ID, max = MAX_ID)
     private Integer id;
     @DomainConstraint(type = "String", mutable = true, optional = false, length = MAX_NAME_LENGTH)
-    private String name;
+    protected String name;
     @DomainConstraint(type = "Integer", mutable = true, optional = false, length = MAX_PHONE_NUMBER_LENGTH)
-    private String phoneNumber;
+    protected String phoneNumber;
     @DomainConstraint(type = "Integer", mutable = true, optional = false, length = MAX_ADDRESS_LENGTH)
-    private String address;
+    protected String address;
 
     // Constants
     public static final int MIN_ID = 1;
@@ -44,7 +44,10 @@ public class Student implements Comparable<Student>{
     public static final int MAX_ADDRESS_LENGTH = 100;
 
 
-    public Student(@AttrRef("id") Integer id, @AttrRef("name") String name, @AttrRef("phoneNumber") String phoneNumber, @AttrRef("address") String address) {
+    public Student(@AttrRef("id") Integer id,
+                   @AttrRef("name") String name, 
+                   @AttrRef("phoneNumber") String phoneNumber, 
+                   @AttrRef("address") String address) throws NotPossibleException {
         if (!validateId(id)) {
             throw new NotPossibleException("Student.init: invalid id: " + id);
         }
