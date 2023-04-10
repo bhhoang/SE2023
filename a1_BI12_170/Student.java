@@ -68,8 +68,22 @@ public class Student implements Comparable<Student>{
 
     /**
      * @effects
-     *  Overload default constructor with no parameter
-     * 
+     *  Overload default constructor with no parameter for subclasses of Student without using super()
+     * @example
+     *  <pre>
+     *     <p>Assumming given code in UndegradStudent is subclass of Student</p>
+     *      <code>
+     *      public class UndergradStudent extends Student {
+     *         private int id;
+     *         public UndergradStudent(id, name, phoneNumber, address) {
+     *            this.id = id;
+     *            this.name = name;
+     *            this.phoneNumber = phoneNumber;
+     *        }
+     *     </code> 
+     *    <p>With no overload constructor, the above code got error: Implicit super constructor Student() is undefined. Must explicitly invoke another constructorJava(134217871)</p>
+     *    <p>Else, it's working fine.</p>
+     * </pre>
      */
     public Student() {}
 
