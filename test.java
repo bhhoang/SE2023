@@ -5,5 +5,8 @@ public class test {
     public static void main(String[] args) {
         UndergradStudent s2 = new UndergradStudent(10000 , "a", "b", "c");
         PostgradStudent s1 = new PostgradStudent(100000000 , "a", "b", "c", 4.0f);
+
+        System.out.println(s1.toString());
+        System.out.println(s2.toString());
     }
 }

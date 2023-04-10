@@ -35,7 +35,9 @@ public class PostgradStudent extends Student{
     public static final int MIN_ID = (int) 1e8 + 1;
     public static final float MIN_GPA =  0.0f;
     public static final float MAX_GPA =  4.0f;
-    
+    @DomainConstraint(type = "Integer", mutable = false, optional = false, min = MIN_ID, max = MAX_ID)
+    private Integer id;
+
     @DomainConstraint(type = "Float", mutable = true, optional = false, min = MIN_GPA, max = MAX_GPA)
     private Float gpa;
 
@@ -44,22 +46,25 @@ public PostgradStudent(@AttrRef("id") Integer id,
                        @AttrRef("phoneNumber") String phoneNumber, 
                        @AttrRef("address") String address, 
                        @AttrRef("gpa") Float gpa) throws NotPossibleException {
-        super(id, name, phoneNumber, address);
         if (!validateGpa(gpa)) {
             throw new NotPossibleException("PostgradStudent.init: invalid gpa: " + gpa);
         }
-        if (!super.validateId(id)) {
+        if (!validateId(id)) {
             throw new NotPossibleException("PostgradStudent.init: invalid id: " + id);
         }
-        if (!super.validateName(name)) {
+        if (!validateName(name)) {
             throw new NotPossibleException("PostgradStudent.init: invalid name: " + name);
         }
-        if (!super.validatePhoneNumber(phoneNumber)) {
+        if (!validatePhoneNumber(phoneNumber)) {
             throw new NotPossibleException("PostgradStudent.init: invalid phoneNumber: " + phoneNumber);
         }
-        if (!super.validateAddress(address)) {
+        if (!validateAddress(address)) {
             throw new NotPossibleException("PostgradStudent.init: invalid address: " + address);
         }
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
         this.gpa = gpa;
     }
     

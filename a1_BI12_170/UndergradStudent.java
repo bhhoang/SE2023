@@ -32,23 +32,32 @@ public class UndergradStudent extends Student{
     public static final int MIN_ID = (int) 1e5;
     public static final int MAX_ID = (int) 1e8;
 
+    @DomainConstraint(type = "Integer", mutable = false, optional = false, min = MIN_ID, max = MAX_ID)
+    private Integer id;
     public UndergradStudent(@AttrRef("id") Integer id,
                             @AttrRef("name") String name, 
                             @AttrRef("phoneNumber") String phoneNumber, 
                             @AttrRef("address") String address) throws NotPossibleException {
-        super(id, name, phoneNumber, address);
         if (!validateId(id)) {
             throw new NotPossibleException("UndergradStudent.init: invalid id: " + id);
         }
+        
         if (!validateName(name)) {
             throw new NotPossibleException("UndergradStudent.init: invalid name: " + name);
         }
+
         if (!validatePhoneNumber(phoneNumber)) {
             throw new NotPossibleException("UndergradStudent.init: invalid phoneNumber: " + phoneNumber);
         }
+
         if (!validateAddress(address)) {
             throw new NotPossibleException("UndergradStudent.init: invalid address: " + address);
         }
+
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
     
     /**

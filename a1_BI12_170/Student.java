@@ -68,6 +68,13 @@ public class Student implements Comparable<Student>{
 
     /**
      * @effects
+     *  Overload default constructor with no parameter
+     * 
+     */
+    public Student() {}
+
+    /**
+     * @effects
      *  if id is valid
      *      return true
      *  else
