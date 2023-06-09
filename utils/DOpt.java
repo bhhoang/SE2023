@@ -26,11 +26,4 @@ public @interface DOpt {
    */
   OptType type();
 
-  /**
-   *  whether or not the behaviour of the associated operation is optional for the 
-   *  owner class to function.
-   *  <br>Default: <tt>false</tt>   
-   */
-  boolean optional() default false;
-
 }

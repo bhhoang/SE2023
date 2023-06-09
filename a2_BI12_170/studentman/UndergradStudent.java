@@ -1,8 +1,10 @@
-package a1_BI12_170;
+package a2_BI12_170.studentman;
 
 import utils.AttrRef;
+import utils.DOpt;
 import utils.DomainConstraint;
 import utils.NotPossibleException;
+import utils.OptType;
 
 /**
  * @overview An under graduate student being that is characterized by an id, name, phoneNumber and address.
@@ -63,5 +65,17 @@ public class UndergradStudent extends Student{
     public String toString(){
         return "UndergradStudent<" + getId() + "," + getName() + "," + getPhoneNumber() + "," + getAddress() + ">";
     }
-
+    
+    @DOpt(type=OptType.Default)
+    @Override
+    public String toHtmlDoc(){
+        return "<html>\n" +
+                "<head>"+
+                "<title>Student:" + getId() + "-" + getName() +"</title>" +
+                "</head>" +
+                " <body>\n" +
+                getId()+ " " + getPhoneNumber() + " " + getAddress() + " " +
+                " </body>" +
+                "</html>";
+    }
 }

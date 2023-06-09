@@ -1,7 +1,6 @@
-package a1_BI12_170;
+package a2_BI12_170.studentman;
 import utils.DomainConstraint;
 import utils.NotPossibleException;
-import a2_BI12_170.studentman.Document;
 import utils.AttrRef;
 import utils.DOpt;
 import utils.OptType;
@@ -28,7 +27,7 @@ import utils.OptType;
  * @author bhhoang
  */
 
-public class Student implements Comparable<Student>{
+public class Student implements Comparable<Student>, Document{
     @DomainConstraint(type = "int", mutable = false, optional = false, min = MIN_ID, max = MAX_ID)
     private int id;
 
@@ -272,6 +271,7 @@ public class Student implements Comparable<Student>{
      *     throw ClassCastException
      *  else
      *     return this.name.compareTo(Student.name)
+     * 
      * @return this.name.compareTo(Student.name)
      */
     @Override
@@ -285,6 +285,32 @@ public class Student implements Comparable<Student>{
             throw new ClassCastException("Student.compareTo: student is not instance of Student");
         }
         return this.name.compareTo(student.name);
+    }
+
+    /**
+     * @effects
+     * return a HTML doc of this student
+     * e.g.:
+     * <pre>
+     * <code>
+     * <html>
+     * <head><title>Student: 170-Bui Huy Hoang</title></head>
+     * <body>
+     * 170 Bui Huy Hoang SDT Dia chi</body></html>
+     * </code>
+     * @return HTML doc of this student
+     */
+    @Override
+    @DOpt(type = OptType.Default)
+    public String toHtmlDoc(){
+        return "<html>\n" +
+                "<head>"+
+                "<title>Student:" + getId() + "-" + getName() +"</title>" +
+                "</head>" +
+                " <body>\n" +
+                getId()+ " " + getPhoneNumber() + " " + getAddress() + " " +
+                " </body>" +
+                "</html>";
     }
 
 }

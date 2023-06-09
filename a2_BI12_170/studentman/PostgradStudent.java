@@ -1,4 +1,5 @@
-package a1_BI12_170;
+package a2_BI12_170.studentman;
+
 import utils.DomainConstraint;
 import utils.NotPossibleException;
 import utils.AttrRef;
@@ -114,5 +115,17 @@ public class PostgradStudent extends Student{
         return id >= MIN_ID && id <= MAX_ID;
     }
 
+    @Override
+    @DOpt(type = OptType.Default)
+    public String toHtmlDoc(){
+        return "<html>\n" +
+                "<head>"+
+                "<title>Student:" + getId() + "-" + getName() +"</title>" +
+                "</head>" +
+                " <body>\n" +
+                getId()+ " " + getPhoneNumber() + " " + getAddress() + " " + getGpa() +
+                "</body>" +
+                "</html>";
+    }
 
 }
