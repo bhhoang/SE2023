@@ -29,16 +29,16 @@ import utils.OptType;
 
 public class Student implements Comparable<Student>, Document{
     @DomainConstraint(type = "int", mutable = false, optional = false, min = MIN_ID, max = MAX_ID)
-    private int id;
+    protected int id;
 
     @DomainConstraint(type = "String", optional = false, length = MAX_NAME_LENGTH)
-    private String name;
+    protected String name;
 
     @DomainConstraint(type = "int", optional = false, length = MAX_PHONE_NUMBER_LENGTH)
-    private String phoneNumber;
+    protected String phoneNumber;
 
     @DomainConstraint(type = "int", mutable = true, optional = false, length = MAX_ADDRESS_LENGTH)
-    private String address;
+    protected String address;
 
     // Constants
     public static final int MIN_ID = 1;
@@ -47,7 +47,13 @@ public class Student implements Comparable<Student>, Document{
     public static final int MAX_PHONE_NUMBER_LENGTH = 10;
     public static final int MAX_ADDRESS_LENGTH = 100;
 
-
+    /**
+     * @effects
+     * if id, name, phoneNumber and address are valid
+     *     initialise instance of this class as <id, name, phoneNumber, address>
+     * else
+     *    throw NotPossibleException
+     */
     public Student(@AttrRef("id") int id,
                    @AttrRef("name") String name, 
                    @AttrRef("phoneNumber") String phoneNumber, 
@@ -99,7 +105,7 @@ public class Student implements Comparable<Student>, Document{
      *     return false
      * @param id
      */
-    @DOpt(type=OptType.Helper)
+    @DOpt(type=OptType.Default)
     protected boolean validateId(int id) {
         return id >= MIN_ID && id <= MAX_ID;
     }
@@ -112,9 +118,9 @@ public class Student implements Comparable<Student>, Document{
      *     return false
      * @param name
      */
-    @DOpt(type=OptType.Helper)
+    @DOpt(type=OptType.Default)
     protected boolean validateName(String name) {
-        return name != null && name.length() > 0;
+        return name != null && name.length() > 0 && name.length() <= MAX_NAME_LENGTH;
     }
 
     /**
@@ -125,9 +131,9 @@ public class Student implements Comparable<Student>, Document{
      *     return false
      * @param phoneNumber
      */
-    @DOpt(type=OptType.Helper)
+    @DOpt(type=OptType.Default)
     protected boolean validatePhoneNumber(String phoneNumber) {
-        return phoneNumber != null && phoneNumber.length() > 0;
+        return phoneNumber != null && phoneNumber.length() > 0 && phoneNumber.length() <= MAX_PHONE_NUMBER_LENGTH;
     }
 
     /**
@@ -138,9 +144,9 @@ public class Student implements Comparable<Student>, Document{
      *     return false
      * @param address
      */
-    @DOpt(type=OptType.Helper)
+    @DOpt(type=OptType.Default)
     protected boolean validateAddress(String address) {
-        return address != null && address.length() > 0;
+        return address != null && address.length() > 0 && address.length() <= MAX_ADDRESS_LENGTH;
     }
 
     /**
@@ -249,7 +255,6 @@ public class Student implements Comparable<Student>, Document{
      *  return true if this satisfies the abstract properties
      *          false otherwise
      */
-
     public boolean repOK() {
         return validateId(id) && validateName(name) && validatePhoneNumber(phoneNumber) && validateAddress(address);
     }
@@ -264,6 +269,7 @@ public class Student implements Comparable<Student>, Document{
 	}
 
     /**
+     * @param student Student instance to be compared
      * @effects
      *  if student is null
      *      throw NullPointerException
@@ -275,7 +281,7 @@ public class Student implements Comparable<Student>, Document{
      * @return this.name.compareTo(Student.name)
      */
     @Override
-    @DOpt(type=OptType.Helper)
+    @DOpt(type=OptType.Default)
     @AttrRef("name")
     public int compareTo(Student student) throws NullPointerException, ClassCastException {
         if (student == null) {

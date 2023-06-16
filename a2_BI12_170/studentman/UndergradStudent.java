@@ -44,7 +44,22 @@ public class UndergradStudent extends Student{
                             @AttrRef("name") String name, 
                             @AttrRef("phoneNumber") String phoneNumber, 
                             @AttrRef("address") String address) throws NotPossibleException {
-        super(id, name, phoneNumber, address);
+        if (!validateId(id)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid id: " + id);
+        }
+        if (!validateName(name)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid name: " + name);
+        }
+        if (!validatePhoneNumber(phoneNumber)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid phoneNumber: " + phoneNumber);
+        }
+        if (!validateAddress(address)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid address: " + address);
+        }
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     // Override methods
@@ -71,7 +86,7 @@ public class UndergradStudent extends Student{
     public String toHtmlDoc(){
         return "<html>\n" +
                 "<head>"+
-                "<title>Student:" + getId() + "-" + getName() +"</title>" +
+                "<title>UndergradStudent:" + getId() + "-" + getName() +"</title>" +
                 "</head>" +
                 " <body>\n" +
                 getId()+ " " + getPhoneNumber() + " " + getAddress() + " " +

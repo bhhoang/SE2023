@@ -54,10 +54,25 @@ public class PostgradStudent extends Student{
                            @AttrRef("phoneNumber") String phoneNumber, 
                            @AttrRef("address") String address,
                            @AttrRef("gpa") float gpa) throws NotPossibleException {
-        super(id, name, phoneNumber, address);
+        if (!validateId(id)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid id: " + id);
+        }
+        if (!validateName(name)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid name: " + name);
+        }
+        if (!validatePhoneNumber(phoneNumber)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid phoneNumber: " + phoneNumber);
+        }
+        if (!validateAddress(address)) {
+            throw new NotPossibleException("UndergradStudent.init: invalid address: " + address);
+        }
         if (!validateGpa(gpa)) {
             throw new NotPossibleException("PostgradStudent.init: invalid gpa: " + gpa);
         }
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
         this.gpa = gpa;
     }
 
